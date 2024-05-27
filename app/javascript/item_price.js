@@ -3,8 +3,10 @@ priceInput.addEventListener("input", () => {
     const inputValue = priceInput.value;
 
     const addTaxDom = document.getElementById("add-tax-price");
-    addTaxDom.innerHTML = Math.round(priceInput.value * 0.1 );
+    const taxAmount = Math.round(inputValue * 0.1);
+    addTaxDom.innerHTML = taxAmount;
 
-    const addPofitDom = document.getElementById("profit");
-    addPofitDom.innerHTML = Math.round(priceInput.value - Math.round(priceInput.value * 0.1 ))
-})
+    const addProfitDom = document.getElementById("profit");
+    const profitAmount = Math.round(inputValue - taxAmount);
+    addProfitDom.innerHTML = profitAmount;
+});
