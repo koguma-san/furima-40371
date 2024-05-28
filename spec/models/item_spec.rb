@@ -60,7 +60,22 @@ RSpec.describe Item, type: :model do
       it 'userが紐付いていないと出品できない' do
         @item.user = nil
         @item.valid?
-        expect(@item.errors.full_messages).to include('User must exist')
+        expect(@item.errors.full_messages).to include("User must exist")
+      end
+      it '価格に半角数字以外が含まれている場合は出品できない' do
+        @item.price = '３００'
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Price must be a half-width number and between 300 and 9999999")
+      end
+      it '価格が300円未満では出品できない' do
+        @item.price = '299'
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Price must be a half-width number and between 300 and 9999999")
+      end
+      it '価格が9_999_999円を超えると出品できない' do
+        @item.price = '10000000'
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Price must be a half-width number and between 300 and 9999999")
       end
     end
   end
