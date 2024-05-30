@@ -73,7 +73,7 @@ RSpec.describe Item, type: :model do
         expect(@item.errors.full_messages).to include("Delivery day can't be blank")
       end
       it 'delivery_dayに「---」が選択されているとき' do
-        @item.delivery_day_id = ''
+        @item.delivery_day_id = '1'
         @item.valid?
         expect(@item.errors.full_messages).to include("Delivery day can't be blank")
       end
