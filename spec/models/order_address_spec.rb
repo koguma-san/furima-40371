@@ -21,6 +21,11 @@ RSpec.describe OrderAddress, type: :model do
     end
 
     context '商品購入できない場合' do
+      it 'tokenが空では登録できない' do
+        @order_address.token = nil
+        @order_address.valid?
+        expect(@order_address.errors.full_messages).to include("Token can't be blank")
+      end
       it 'post_codeが空だと保存できない' do
         @order_address.post_code = ''
         @order_address.valid?
@@ -62,22 +67,22 @@ RSpec.describe OrderAddress, type: :model do
         expect(@order_address.errors.full_messages).to include("Address can't be blank")
       end
       it 'tel_numberが空では保存できない' do
-        @order_address.tel_numbers = ''
+        @order_address.tel_number = ''
         @order_address.valid?
         expect(@order_address.errors.full_messages).to include("Tel number can't be blank")
       end
       it 'tel_numberが9桁以下では保存できない' do
-        @order_address.tel_numbers = '11111111'
+        @order_address.tel_number = '11111111'
         @order_address.valid?
         expect(@order_address.errors.full_messages).to include("Tel number must be 10 to 11 digits")
       end
       it 'tel_numberが12桁以上では保存できない' do
-        @order_address.tel_numbers = '090-1234-5678'
+        @order_address.tel_number = '090-1234-5678'
         @order_address.valid?
         expect(@order_address.errors.full_messages).to include("Tel number must be 10 to 11 digits")
       end
       it 'tel_numberが半角でないと保存できない' do
-        @order_address.tel_numbers = '０９０１２３４５６７８'
+        @order_address.tel_number = '０９０１２３４５６７８'
         @order_address.valid?
         expect(@order_address.errors.full_messages).to include("Tel number must be 10 to 11 digits")
       end
